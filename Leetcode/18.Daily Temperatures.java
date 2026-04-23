@@ -1,0 +1,23 @@
+import java.util.*;
+
+class Solution {
+    public int[] dailyTemperatures(int[] temperatures) {
+        Stack<Integer> stack = new Stack<>();
+
+        int ans[] = new int[temperatures.length];
+
+        for (int i = 0; i < temperatures.length; i++) {
+            if (stack.size() == 0 || temperatures[stack.peek()] >= temperatures[i]) {
+                stack.push(i);
+            } else {
+                while (stack.size() > 0 && temperatures[stack.peek()] < temperatures[i]) {
+                    int last = stack.pop();
+                    ans[last] = i - last;
+                }
+                stack.push(i);
+            }
+        }
+
+        return ans;
+    }
+}
